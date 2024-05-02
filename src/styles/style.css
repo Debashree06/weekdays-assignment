@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.job-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.job-filters input[type="text"],
+.job-filters button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.job-filters label {
+  display: flex;
+  align-items: center;
+}
+
+.job-filters button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.job-filters button:hover {
+  background-color: #0056b3;
+}
+
+/* Optionally, add more styles as needed */
+
