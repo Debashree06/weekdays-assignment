@@ -1,85 +1,67 @@
+import { Box, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import JobList from "./JobList";
 
-const JobFilters = ({ onFilter }) => {
-  const [minExperience, setMinExperience] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [location, setLocation] = useState("");
-  const [remote, setRemote] = useState("");
-  const [techStack, setTechStack] = useState("");
-  const [role, setRole] = useState("");
-  const [minBasePay, setMinBasePay] = useState("");
+const Filters = () => {
+  const jobs = useSelector((state) => state.jobs.jobs);
+  const [filterLocation, setFilterLocation] = useState("");
+  const [filterExperience, setFilterExperience] = useState("");
+  const [filterRole, setFilterRole] = useState("");
 
-  const handleFilter = () => {
-    const filters = {
-      minExperience,
-      companyName,
-      location,
-      remote,
-      techStack,
-      role,
-      minBasePay,
-    };
-    onFilter(filters);
+  const handleLocationChange = (e) => {
+    setFilterLocation(e.target.value);
   };
-
-  const clearFilters = () => {
-    setMinExperience("");
-    setCompanyName("");
-    setLocation("");
-    setRemote("");
-    setTechStack("");
-    setRole("");
-    setMinBasePay("");
-    handleFilter(); // Apply filters after clearing
+  const handleRoleChange = (e) => {
+    setFilterRole(e.target.value);
   };
-
+  const handleExperienceChange = (e) => {
+    setFilterExperience(e.target.value);
+  };
   return (
-    <div className="job-filters">
-      <input
-        type="text"
-        placeholder="Minimum Experience"
-        value={minExperience}
-        onChange={(e) => setMinExperience(e.target.value)}
+    <div>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          paddingBottom: "40px",
+          gap: "50px",
+        }}
+      >
+        <TextField
+          type="number"
+          name="experience"
+          label="Min Experience"
+          variant="outlined"
+          value={filterExperience}
+          onChange={handleExperienceChange}
+        />
+        <TextField
+          type="text"
+          name="role"
+          label="Role"
+          variant="outlined"
+          value={filterRole}
+          onChange={handleRoleChange}
+        />
+        <TextField
+          type="text"
+          name="location"
+          label="Location"
+          variant="outlined"
+          value={filterLocation}
+          onChange={handleLocationChange}
+        />
+      </Box>
+      <JobList
+        jobs={jobs}
+        filterRole={filterRole}
+        filterLocation={filterLocation}
+        filterExperience={filterExperience}
       />
-      <input
-        type="text"
-        placeholder="Company Name"
-        value={companyName}
-        onChange={(e) => setCompanyName(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-      />
-      <select value={remote} onChange={(e) => setRemote(e.target.value)}>
-        <option value="">Remote</option>
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-      <input
-        type="text"
-        placeholder="Tech Stack"
-        value={techStack}
-        onChange={(e) => setTechStack(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Role"
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Minimum Base Pay"
-        value={minBasePay}
-        onChange={(e) => setMinBasePay(e.target.value)}
-      />
-      <button onClick={handleFilter}>Apply Filters</button>
-      <button onClick={clearFilters}>Clear Filters</button>
     </div>
   );
 };
 
-export default JobFilters;
+export default Filters;
